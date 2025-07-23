@@ -1,17 +1,17 @@
 import { db } from "@/db";
 import { tasks } from "@/db/schema";
+import { formatZodErrors } from "@/lib/formatZodErrors";
+import { allowedStatuses, CreateTaskSchema } from "@/lib/validation";
+import type { Task, TaskStatus } from "@/types";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-import { CreateTaskSchema, TaskStatusEnum } from "@/lib/validation";
-import type { Task, TaskStatus } from "@/types";
-import { formatZodErrors } from "@/lib/formatZodErrors";
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");
 
-    if (status && !TaskStatusEnum.options.includes(status as TaskStatus)) {
+    if (status && !allowedStatuses.includes(status as TaskStatus)) {
       return NextResponse.json({ error: "Invalid status filter" }, { status: 400 });
     }
 
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     const newTask: Task = {
       id: crypto.randomUUID(),
       title,
-      status,
+      status: status as TaskStatus,
       createdAt: new Date().toISOString(),
     };
 

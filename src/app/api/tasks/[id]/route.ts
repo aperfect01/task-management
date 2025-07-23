@@ -23,7 +23,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ error: "Task not found" }, { status: 404 });
     }
 
-    await db.update(tasks).set({ status: parsed.data.status }).where(eq(tasks.id, params.id)).run();
+    await db
+      .update(tasks)
+      .set({ status: parsed.data.status as Task["status"] })
+      .where(eq(tasks.id, params.id))
+      .run();
 
     const updated = (await db.select().from(tasks).where(eq(tasks.id, params.id)).get()) as Task;
     return NextResponse.json(updated);
