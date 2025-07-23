@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-export const allowedStatuses = ["todo", "in-progress", "done"] as const;
-
-export const TaskStatusEnum = z.string().refine((val) => allowedStatuses.includes(val as any), {
+export const TaskStatusEnum = z.enum(["todo", "in-progress", "done"], {
   message: "Status must be one of: todo, in-progress, or done",
 });
 

@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { tasks } from "@/db/schema";
 import { formatZodErrors } from "@/lib/formatZodErrors";
-import { allowedStatuses, CreateTaskSchema } from "@/lib/validation";
+import { CreateTaskSchema, TaskStatusEnum } from "@/lib/validation";
 import type { Task, TaskStatus } from "@/types";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
@@ -11,7 +11,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");
 
-    if (status && !allowedStatuses.includes(status as TaskStatus)) {
+    if (status && !TaskStatusEnum.options.includes(status as TaskStatus)) {
       return NextResponse.json({ error: "Invalid status filter" }, { status: 400 });
     }
 
