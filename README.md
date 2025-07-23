@@ -25,6 +25,13 @@ For this project, I went with Next.js with the App Router because it lets me bui
 7.  The application will be accessible at `http://localhost:3000`.
 
 ---
+#### Testing
+
+The API has a set of tests located in the `src/__tests__` folder. To run them, make sure you have the dependencies installed and then execute the following command:
+
+`npm run test`
+
+---
 
 #### API Documentation
 
