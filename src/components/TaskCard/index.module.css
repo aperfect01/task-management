@@ -1,0 +1,59 @@
+.card {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.date {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0.25rem 0 0 0;
+}
+
+.deleteButton {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ef4444;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.deleteButton:hover {
+  color: #b91c1c;
+}
+
+.statusContainer {
+  margin-top: 1rem;
+}
+
+.statusLabel {
+  font-size: 0.875rem;
+  color: #4b5563;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.statusSelect {
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+}
