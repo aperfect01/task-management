@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-export const TaskStatusEnum = z.enum(["todo", "in-progress", "done"]);
+const allowedStatuses = ["todo", "in-progress", "done"] as const;
+
+export const TaskStatusEnum = z.string().refine((val) => allowedStatuses.includes(val as any), {
+  message: "Status must be one of: todo, in-progress, or done",
+});
 
 export const CreateTaskSchema = z.object({
   title: z.string().min(1, "Title is required"),
