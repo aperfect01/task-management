@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { CreateTaskSchema, TaskStatusEnum } from "@/lib/validation";
 import type { Task, TaskStatus } from "@/types";
-import z from "zod";
+import { formatZodErrors } from "@/lib/formatZodErrors";
 
 export async function GET(req: Request) {
   try {
@@ -35,7 +35,8 @@ export async function POST(req: Request) {
     const parsed = CreateTaskSchema.safeParse(json);
 
     if (!parsed.success) {
-      return NextResponse.json({ error: z.treeifyError(parsed.error) }, { status: 400 });
+      const error = formatZodErrors(parsed.error);
+      return NextResponse.json({ error }, { status: 400 });
     }
 
     const { title, status = "todo" } = parsed.data;

@@ -3,8 +3,9 @@ import { tasks } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { UpdateStatusSchema } from "@/lib/validation";
-import type { Task, TaskStatus } from "@/types";
+import type { Task } from "@/types";
 import z from "zod";
+import { formatZodErrors } from "@/lib/formatZodErrors";
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
@@ -12,7 +13,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     const parsed = UpdateStatusSchema.safeParse(json);
 
     if (!parsed.success) {
-      return NextResponse.json({ error: z.treeifyError(parsed.error) }, { status: 400 });
+      const error = formatZodErrors(parsed.error);
+      return NextResponse.json({ error }, { status: 400 });
     }
 
     const task: Task | undefined = await db.select().from(tasks).where(eq(tasks.id, params.id)).get();
